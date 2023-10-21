@@ -3,7 +3,7 @@ namespace PROG7312.POE
 {
 	public class TaskManager
 	{
-		public TaskManager()
+		public static void ShowMenu()
 		{
             bool gameplay = true;
             Console.WriteLine("\n------------------------------------------------------------------------------------------------------------------------------\n\nWELCOME to DEWEYDISCOVER!");
@@ -27,7 +27,7 @@ namespace PROG7312.POE
                     case "1":
                         {
                             Console.WriteLine("\nYou have chosen 'Replacing books'.");
-                            PerformReplacingBooksTask();
+                            ReplacingBooksTask.ReplaceBooks();
                             break;
                         }
                     case "2":

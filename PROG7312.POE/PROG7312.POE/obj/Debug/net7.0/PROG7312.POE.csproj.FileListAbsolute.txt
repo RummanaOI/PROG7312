@@ -1,0 +1,15 @@
+/Users/rummanaomarismail/Projects/PROG7312/PROG7312.POE/PROG7312.POE/bin/Debug/net7.0/PROG7312.POE
+/Users/rummanaomarismail/Projects/PROG7312/PROG7312.POE/PROG7312.POE/bin/Debug/net7.0/PROG7312.POE.deps.json
+/Users/rummanaomarismail/Projects/PROG7312/PROG7312.POE/PROG7312.POE/bin/Debug/net7.0/PROG7312.POE.runtimeconfig.json
+/Users/rummanaomarismail/Projects/PROG7312/PROG7312.POE/PROG7312.POE/bin/Debug/net7.0/PROG7312.POE.dll
+/Users/rummanaomarismail/Projects/PROG7312/PROG7312.POE/PROG7312.POE/bin/Debug/net7.0/PROG7312.POE.pdb
+/Users/rummanaomarismail/Projects/PROG7312/PROG7312.POE/PROG7312.POE/obj/Debug/net7.0/PROG7312.POE.csproj.AssemblyReference.cache
+/Users/rummanaomarismail/Projects/PROG7312/PROG7312.POE/PROG7312.POE/obj/Debug/net7.0/PROG7312.POE.GeneratedMSBuildEditorConfig.editorconfig
+/Users/rummanaomarismail/Projects/PROG7312/PROG7312.POE/PROG7312.POE/obj/Debug/net7.0/PROG7312.POE.AssemblyInfoInputs.cache
+/Users/rummanaomarismail/Projects/PROG7312/PROG7312.POE/PROG7312.POE/obj/Debug/net7.0/PROG7312.POE.AssemblyInfo.cs
+/Users/rummanaomarismail/Projects/PROG7312/PROG7312.POE/PROG7312.POE/obj/Debug/net7.0/PROG7312.POE.csproj.CoreCompileInputs.cache
+/Users/rummanaomarismail/Projects/PROG7312/PROG7312.POE/PROG7312.POE/obj/Debug/net7.0/PROG7312.POE.dll
+/Users/rummanaomarismail/Projects/PROG7312/PROG7312.POE/PROG7312.POE/obj/Debug/net7.0/refint/PROG7312.POE.dll
+/Users/rummanaomarismail/Projects/PROG7312/PROG7312.POE/PROG7312.POE/obj/Debug/net7.0/PROG7312.POE.pdb
+/Users/rummanaomarismail/Projects/PROG7312/PROG7312.POE/PROG7312.POE/obj/Debug/net7.0/PROG7312.POE.genruntimeconfig.cache
+/Users/rummanaomarismail/Projects/PROG7312/PROG7312.POE/PROG7312.POE/obj/Debug/net7.0/ref/PROG7312.POE.dll
