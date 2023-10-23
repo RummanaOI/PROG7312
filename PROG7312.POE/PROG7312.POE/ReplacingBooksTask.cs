@@ -19,7 +19,7 @@ namespace PROG7312.POE
                     Console.WriteLine($"\n{i + 1}. {randomCallNumbers[i]}");
                 }
 
-                // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Sort the list using the quick sort
+                // for testing!!!!!!!!!!
                 //create list for sorted numbers
                 List<string> sortedNumbers = new List<string>(randomCallNumbers);
                 //sort numbers
@@ -56,8 +56,15 @@ namespace PROG7312.POE
                     userSortedNumbers.Add(randomCallNumbers[newIndex]);
                 }
 
-                
 
+                //create list for sorted numbers
+                //..List<string> sortedNumbers = new List<string>(randomCallNumbers);
+                //sort numbers
+                //..Utilities.QuickSort(sortedNumbers, 0, sortedNumbers.Count - 1);
+                //create dictionary for correct answer
+                //..Dictionary<string, string> correctAnswer = new Dictionary<string, string>();
+                
+                
                 // Compare the user answer to the correct answer and give user points
                 if (string.Join(",", sortedNumbers) == string.Join(",", userSortedNumbers))
                 {
@@ -71,9 +78,18 @@ namespace PROG7312.POE
                     Console.WriteLine("Your Answer\t\tCorrect Answer");
                     for (int i=0; i < sortedNumbers.Count; i++)
                     {
-                        string userAnswer = i < userSortedNumbers.Count ? userSortedNumbers[i] : "N/A";
-                        Console.WriteLine($"{userAnswer}\t\t{sortedNumbers[i]}");
-                        
+                        //populate and display correct answer 
+                        for (int k = 0; k < sortedNumbers.Count; k++)
+                        {
+                            for (int j = 0; j < randomCallNumbers.Count; j++)
+                            {
+                                if (sortedNumbers[k] == randomCallNumbers[j])
+                                {
+                                    correctAnswer.Add((j + 1).ToString(), sortedNumbers[k]);
+                                    Console.WriteLine($"{j + 1}. {sortedNumbers[k]}");
+                                }
+                            }
+                        }
                     }
                     Console.WriteLine($"\nSorry that means you have received 0 points for this task.");
                 }
@@ -97,4 +113,6 @@ namespace PROG7312.POE
         }
 	}
 }
+
+
 

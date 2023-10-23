@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using PROG7312.POE;
+
 namespace PROG7312.POE
 {
 	public class Utilities
@@ -7,6 +11,8 @@ namespace PROG7312.POE
 		{
 		}
 
+
+        //P1
         //GENERATE RANDOM CALL NUMEBRS
         public static List<string> GenerateRandomCallNumbers()
         {
@@ -94,3 +100,112 @@ namespace PROG7312.POE
     }
 }
 
+//P2
+
+public static class DDCategories
+{
+    public static Dictionary<string, string> Categories = new Dictionary<string, string>
+        {
+            {"000", "Generalities"},
+            {"100", "Philosophy & Psychology"},
+            {"200", "Religion"},
+            {"300", "Social Sciences"},
+            {"400", "Language"},
+            {"500", "Natural Sciences & Mathematics"},
+            {"600", "Technology (Applied Sciences)"},
+            {"700", "The Arts"},
+            {"800", "Literature & Rhetoric"},
+            {"900", "Geography & History"}
+        };
+}
+
+
+public class CorrectAnswer
+{
+    public int ColAIndex { get; set; }
+    public int ColBIndex { get; set; }
+    public string ColBContent { get; set; }
+}
+
+//Data class for generating and passing the question
+public class QuestionData
+{
+    public List<string> columnA { get; set; }
+    public List<string> columnB { get; set; }
+    public List<CorrectAnswer> correctAnswers { get; set; }
+
+    public QuestionData()
+    {
+        columnA = new List<string>();
+        columnB = new List<string>();
+        correctAnswers = new List<CorrectAnswer>();
+        Random random = new Random();
+
+        // Randomly decide between categories and call numbers for columnA
+        bool isCategoryInColumnA = random.Next(2) == 0;
+
+        if (isCategoryInColumnA)
+        {
+            // Select 4 random categories for columnA
+            columnA = DDCategories.Categories.Values.OrderBy(x => Guid.NewGuid()).Take(4).ToList();
+
+            // Populate columnB with corresponding call numbers
+            foreach (var item in columnA)
+            {
+                string key = DDCategories.Categories.FirstOrDefault(x => x.Value == item).Key;
+                columnB.Add(key);
+            }
+        }
+        else
+        {
+            // Select 4 random call numbers for columnA
+            columnA = DDCategories.Categories.Keys.OrderBy(x => Guid.NewGuid()).Take(4).ToList();
+
+            // Populate columnB with corresponding categories
+            foreach (var key in columnA)
+            {
+                string value;
+                DDCategories.Categories.TryGetValue(key, out value);
+                columnB.Add(value);
+            }
+        }
+
+        // Add 3 random items to columnB
+        var remainingItems = DDCategories.Categories.Where(x => !columnB.Contains(x.Key) && !columnB.Contains(x.Value)).ToList();
+        var randomItems = remainingItems.OrderBy(x => Guid.NewGuid()).Take(3).ToList();
+        foreach (var item in randomItems)
+        {
+            columnB.Add(isCategoryInColumnA ? item.Key : item.Value);
+        }
+
+        // Randomize the order of columnB
+        columnB = columnB.OrderBy(x => Guid.NewGuid()).ToList();
+
+
+
+        //populate correct answers
+        for (int i = 0; i < columnA.Count; i++)
+        {
+            int colBIndex; // Declare it here so you can use it later for ColBContent
+            if (isCategoryInColumnA)
+            {
+                string key = DDCategories.Categories.FirstOrDefault(x => x.Value == columnA[i]).Key;
+                colBIndex = columnB.IndexOf(key) + 1;
+            }
+            else
+            {
+                string value;
+                DDCategories.Categories.TryGetValue(columnA[i], out value);
+                colBIndex = columnB.IndexOf(value) + 1;
+            }
+
+            var answer = new CorrectAnswer
+            {
+                ColAIndex = i + 1,
+                ColBIndex = colBIndex,
+                ColBContent = columnB[colBIndex - 1]
+            };
+            correctAnswers.Add(answer);
+        }
+    }
+}
