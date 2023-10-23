@@ -1,0 +1,72 @@
+﻿@model List<string>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Replace Books</title>
+    <link rel="stylesheet" href="~/css/drag-and-drop.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js" integrity="sha512-Eezs+g9Lq4TCCq0wae01s9PuNWzHYoCMkE97e2qdkYthpI0pzC3UGB03lgEHn2XM85hDOUF6qgqqszs+iXU4UA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <div>
+        <p>
+
+
+
+        </p>
+    </div>
+    <hr>
+    <div>
+        <p>Arrange the list of call numbers below in the correct order by dragging the elements and then pressing the 'Check Answer' button below!</p>
+    </div>
+    <hr>
+
+    <div class="wrapper list-group">
+        @foreach (var callNumber in Model)
+        {
+            <div class="item">
+                <span class="text">@callNumber</span>
+                <i class="fas fa-bars"></i>
+            </div>
+
+        }
+    </div>
+
+    <button id="checkOrder" class="btn btn-primary">Check Answer</button>
+
+
+    <script>
+        const dragArea = document.querySelector(".wrapper");
+        new Sortable(dragArea, {
+            animation: 350
+        });
+
+        // Add click event to the button
+        document.getElementById("checkOrder").addEventListener("click", function () {
+            let reorderedList = [];
+            const items = document.querySelectorAll(".wrapper .item .text");
+            items.forEach((item) => {
+                reorderedList.push(item.textContent);
+            });
+
+            // Send the reordered list to the server for validation
+            $.ajax({
+                url: '/ReplaceBooks/ValidateCallNumbers',
+                type: 'POST',
+                data: { reorderedList: reorderedList, originalList: @Json.Serialize(Model) },
+                success: function (response) {
+                    if (response) {
+                        alert("Correct order!");
+                    } else {
+                        alert("Incorrect order!");
+                    }
+                }
+            });
+        });
+
+    </script>
+
+
+</body>
+</html>

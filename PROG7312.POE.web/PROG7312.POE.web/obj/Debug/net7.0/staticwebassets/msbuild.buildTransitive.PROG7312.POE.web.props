@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../buildMultiTargeting/PROG7312.POE.web.props" />
+</Project>

@@ -14,7 +14,7 @@ namespace PROG7312.POE
                 Console.WriteLine($"Points: {UserPointsManager.Instance.UserPoints}\n");
                 Console.WriteLine("Please choose a task to perform by entering the corresponding number to the task:\n");
                 Console.WriteLine("\n1. Replacing books");
-                Console.WriteLine("\n2. Identifying areas (Disabled)");
+                Console.WriteLine("\n2. Identifying areas");
                 Console.WriteLine("\n3. Finding call numbers (Disabled)");
                 Console.WriteLine("\n4. End game. (ALL POINTS WILL BE LOST)\n");
 
@@ -31,8 +31,11 @@ namespace PROG7312.POE
                             break;
                         }
                     case "2":
-                        Console.WriteLine("\nThis feature is currently disabled.\n");
-                        break;
+                        {
+                            Console.WriteLine("\nYou have chosen 'Identifying areas'.\n");
+                            IdentifyingAreasTask.IdentifyingAreas();
+                            break;
+                        }
                     case "3":
                         Console.WriteLine("\nThis feature is currently disabled.\n");
                         break;
