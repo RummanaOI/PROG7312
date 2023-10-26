@@ -97,12 +97,12 @@
     
 
     @*script for javascript to handle user interaction*@
-    <script>
-        let points = 0;
-        var correctAnswers = @Html.Raw(Json.Serialize(Model.correctAnswers));
+<script>
+    let points = 0;
+    let correctAnswers;
 
         document.addEventListener("DOMContentLoaded", function () {
-            
+            correctAnswers = @Html.Raw(Json.Serialize(Model.correctAnswers));
             const checkAnswerButton = document.getElementById("checkAnswer");
             const userInstructions = document.getElementById("userInstructions");
 
@@ -126,12 +126,15 @@
                 fetch('/IdentifyAreas/GetNewQuestion')
                     .then(response => response.json())
                     .then(data => {
+                        // Update correctAnswers with new data
+                        correctAnswers = data.correctAnswers;
+
                         // Clear existing table and list
                         document.getElementById("tableBody").innerHTML = "";
 
                         // Update table
                         const tableBody = document.getElementById("tableBody");
-                        
+
                         for (let i = 0; i < Math.max(data.columnA.length, data.columnB.length); i++) {
                             const row = document.createElement("tr");
                             const cellA = document.createElement("td");
@@ -152,7 +155,6 @@
 
                     });
             }
-
 
             //handle check answer button
             checkAnswerButton.addEventListener("click", function() {
@@ -179,6 +181,6 @@
                 }
             });
         });
-    </script>
+</script>
 </body>
 </html>
