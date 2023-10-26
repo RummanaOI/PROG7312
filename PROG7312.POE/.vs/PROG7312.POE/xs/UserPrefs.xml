@@ -1,30 +1,28 @@
 ﻿<Properties StartupConfiguration="{D8F82759-8916-4B60-B3B7-576397812F14}|Default">
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.PROG7312.POE PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="PROG7312.POE/IdentifyingAreasTask.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="PROG7312.POE/ReplacingBooksTask.cs">
     <Files>
-      <File FileName="PROG7312.POE/Program.cs" />
-      <File FileName="PROG7312.POE/TaskManager.cs" />
+      <File FileName="PROG7312.POE/Program.cs" Line="1" Column="1" />
+      <File FileName="PROG7312.POE/TaskManager.cs" Line="1" Column="1" />
       <File FileName="PROG7312.POE/UserPointsManager.cs" />
-      <File FileName="PROG7312.POE/ReplacingBooksTask.cs" />
-      <File FileName="PROG7312.POE/Utilities.cs" />
+      <File FileName="PROG7312.POE/ReplacingBooksTask.cs" Line="68" Column="37" />
+      <File FileName="PROG7312.POE/Utilities.cs" Line="50" Column="33" />
       <File FileName="PROG7312.POE/IdentifyingAreasTask.cs" Line="28" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="PROG7312.POE" expanded="True">
-            <Node name="PROG7312.POE" expanded="True">
-              <Node name="IdentifyingAreasTask.cs" selected="True" />
-            </Node>
+          <Node name="PROG7312.POE">
+            <Node name="PROG7312.POE" expanded="True" />
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.PROG7312.POE PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>

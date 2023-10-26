@@ -4,19 +4,30 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="PROG7312.POE.web/Views/ReplaceBooks/Index.cshtml">
+    <Files>
+      <File FileName="PROG7312.POE.web/Controllers/ReplaceBooksController.cs" Line="41" Column="10" IsPinned="True" />
+      <File FileName="PROG7312.POE.web/Views/ReplaceBooks/Index.cshtml" Line="24" Column="1" IsPinned="True" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="PROG7312.POE.web" expanded="True">
-            <Node name="PROG7312.POE.web" expanded="True">
-              <Node name="Controllers" selected="True" />
+            <Node name="PROG7312.POE.web">
+              <Node name="Views" expanded="True">
+                <Node name="ReplaceBooks" expanded="True">
+                  <Node name="Index.cshtml" selected="True" />
+                </Node>
+                <Node name="Shared" expanded="True">
+                  <Node name="_Layout.cshtml" expanded="True" />
+                </Node>
+              </Node>
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.PROG7312.POE.web PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" FirstBuild="True" />
+  <MonoDevelop.Ide.ItemProperties.PROG7312.POE.web PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

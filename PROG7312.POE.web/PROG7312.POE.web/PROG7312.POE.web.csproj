@@ -10,9 +10,11 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
     <None Remove="Views\ReplaceBooks\" />
+    <None Remove="Views\IdentifyAreas\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\ReplaceBooks\" />
+    <Folder Include="Views\IdentifyAreas\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

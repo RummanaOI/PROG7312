@@ -5,45 +5,101 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Replace Books</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/drag-and-drop.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js" integrity="sha512-Eezs+g9Lq4TCCq0wae01s9PuNWzHYoCMkE97e2qdkYthpI0pzC3UGB03lgEHn2XM85hDOUF6qgqqszs+iXU4UA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
-    <div>
-        <p>
-
-
-
-        </p>
+    <div class="page-header">
+        <br />
+        <br />
+        <h1>Identify Areas</h1>
     </div>
-    <hr>
-    <div>
-        <p>Arrange the list of call numbers below in the correct order by dragging the elements and then pressing the 'Check Answer' button below!</p>
+    <div id="container">
+        <hr>
+        <blockquote class="blockquote text-center">
+            <p class="mb-0" id="userInstructions">Arrange the list of call numbers in the correct order by dragging the elements and then pressing the 'Check Answer' button below!</p>
+
+        </blockquote>
+        <hr>
+
+        <div class="btn-group" role="group">
+            <button id="endGame" type="button" class="btn btn-danger">End Game</button>
+            <button id="nextQuestion" type="button" class="btn btn-secondary">Next Question</button>
+        </div>
+
+        <br />
+        <br />
+
+        <h2 class="mb-0" id="pointsDisplay">Points: 0</h2>
+
+
+
+
+        <div class="wrapper list-group">
+            @foreach (var callNumber in Model)
+            {
+                <div class="item">
+                    <span class="text">@callNumber</span>
+                    <i class="fas fa-bars"></i>
+                </div>
+
+            }
+        </div>
+
+        <button id="checkAnswer" class="btn btn-primary mb-4" style="margin:30px;">Check Answer</button>
+
     </div>
-    <hr>
-
-    <div class="wrapper list-group">
-        @foreach (var callNumber in Model)
-        {
-            <div class="item">
-                <span class="text">@callNumber</span>
-                <i class="fas fa-bars"></i>
-            </div>
-
-        }
-    </div>
-
-    <button id="checkOrder" class="btn btn-primary">Check Answer</button>
-
 
     <script>
+        let points = 0;
+
+        //handle end game button
+        document.getElementById('endGame').addEventListener('click', function () {
+            // Hide or remove elements
+            document.getElementById('container').style.display = 'none';
+            document.getElementById('checkAnswer').style.display = 'none';
+            document.getElementById('nextQuestion').style.display = 'none';
+            document.getElementById('endGame').style.display = 'none';
+
+            // Display points and message
+            const finalMessage = document.createElement('div');
+            finalMessage.innerHTML = `<h1>Good Effort!</h1><p>Your total points are: ${points}</p>`;
+            document.body.appendChild(finalMessage);
+        });
+
+        //handle next question button 
+        document.getElementById("nextQuestion").addEventListener("click", function () {
+            fetch('/ReplaceBooks/GetNewCallNumbers')
+                .then(response => response.json())
+                .then(newCallNumbers => {
+                    // Clear existing list
+                    const wrapper = document.querySelector(".wrapper");
+                    wrapper.innerHTML = "";
+
+                    // Populate the new list
+                    newCallNumbers.forEach(callNumber => {
+                        const newItem = document.createElement("div");
+                        newItem.className = "item";
+                        newItem.innerHTML = `<span class="text">${callNumber}</span><i class="fas fa-bars"></i>`;
+                        wrapper.appendChild(newItem);
+                    });
+
+                    // Re-initialize the Sortable object
+                    new Sortable(wrapper, {
+                        animation: 350
+                    });
+                });
+        });
+
+
         const dragArea = document.querySelector(".wrapper");
         new Sortable(dragArea, {
             animation: 350
         });
 
         // Add click event to the button
-        document.getElementById("checkOrder").addEventListener("click", function () {
+        document.getElementById("checkAnswer").addEventListener("click", function () {
             let reorderedList = [];
             const items = document.querySelectorAll(".wrapper .item .text");
             items.forEach((item) => {
@@ -56,16 +112,41 @@
                 type: 'POST',
                 data: { reorderedList: reorderedList, originalList: @Json.Serialize(Model) },
                 success: function (response) {
-                    if (response) {
-                        alert("Correct order!");
-                    } else {
-                        alert("Incorrect order!");
-                    }
-                }
-            });
-        });
 
+                    // Select the instructionMessage element
+                    const messageElement = document.getElementById("userInstructions");
+
+                    //based on response give user feedback via instructionMessage and list
+                    if (response.isValid) {
+                        //answer was correct
+                        points += 10; // Add 10 points for a correct answer
+                        document.getElementById("pointsDisplay").textContent = `Points: ${points}`;
+                        messageElement.textContent = "Congratulations, you got it right!";
+                    } else {
+                        //answer was incorrect
+                        messageElement.textContent = "Sorry, that's not correct. The list below has been put into the correct order, please review your mistake.";
+
+                        // Update the UI with the correct answers
+                        const wrapper = document.querySelector(".wrapper");
+                        wrapper.innerHTML = ""; // Clear the existing items
+
+                        response.correctAnswer.forEach((item, index) => {
+                            const newItem = document.createElement("div");
+                            newItem.className = "item";
+                            newItem.innerHTML = `<span class="text">${item}</span><i class="fas fa-bars"></i>`;
+                            wrapper.appendChild(newItem);
+                    });
+
+                    // Re-initialize the Sortable object
+                    new Sortable(wrapper, {
+                        animation: 350
+                    });
+                }
+            }
+        });
+    });
     </script>
+
 
 
 </body>

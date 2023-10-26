@@ -1,0 +1,184 @@
+﻿@model PROG7312.POE.web.Models.QuestionData
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Identify Areas</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+</head>
+<body>
+    <div class="page-header">
+        <br />
+        <br />
+        <h1>Identify Areas</h1>
+    </div>
+
+    <div class="container" id="container">
+
+        <div class="btn-group" role="group">
+            <button id="endGame" type="button" class="btn btn-danger">End Game</button>
+            <button id="nextQuestion" type="button" class="btn btn-secondary">Next Question</button>
+        </div>
+
+        <br />
+        <br />
+
+        <h2 class="mb-0" id="pointsDisplay">Points: 0</h2>
+
+        <hr>
+        <blockquote class="blockquote text-center">
+            <p class="mb-0" id="userInstructions">Match columnA and columnB using the dropdowns below and then pressing the 'Check Answer' button below!</p>
+
+        </blockquote>
+        <hr>
+
+        @*Table showing both columns with numerical and alphabetical numbering*@
+
+        <div class="row">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Column A</th>
+                        <th scope="col">Column B</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    @for (int i = 0; i < Math.Max(Model.columnA.Count, Model.columnB.Count); i++)
+                    {
+                        <tr>
+                            <td>
+                                @if (i < Model.columnA.Count)
+                                {
+                                    <text>@(i + 1). @Model.columnA[i]</text>
+                                }
+                            </td>
+                            <td>
+                                @if (i < Model.columnB.Count)
+                                {
+                                    <text>@((char)(97 + i)). @Model.columnB[i]</text>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @*Create dropdowns so user can answer*@
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Match the Columns</h3>
+                <form id="matchForm">
+                    <ol>
+                        @for (int i = 0; i < Model.columnA.Count; i++)
+                        {
+                            <li>
+                                <select name="match_@i" id="match_@i">
+                                    <option value="a">a</option>
+                                    <option value="b">b</option>
+                                    <option value="c">c</option>
+                                    <option value="d">d</option>
+                                    <option value="e">e</option>
+                                    <option value="f">f</option>
+                                    <option value="g">g</option>
+                                </select>
+                            </li>
+                        }
+                    </ol>
+                </form>
+            </div>
+        </div>
+        <button id="checkAnswer" class="btn btn-primary mb-4">Check Answer</button>
+    </div>
+
+    
+
+    @*script for javascript to handle user interaction*@
+    <script>
+        let points = 0;
+        var correctAnswers = @Html.Raw(Json.Serialize(Model.correctAnswers));
+
+        document.addEventListener("DOMContentLoaded", function () {
+            
+            const checkAnswerButton = document.getElementById("checkAnswer");
+            const userInstructions = document.getElementById("userInstructions");
+
+            //handle end game button
+            document.getElementById('endGame').addEventListener('click', function () {
+                // Hide or remove elements
+                document.getElementById('container').style.display = 'none';
+                document.getElementById('checkAnswer').style.display = 'none';
+                document.getElementById('nextQuestion').style.display = 'none';
+                document.getElementById('endGame').style.display = 'none';
+
+                // Display points and message
+                const finalMessage = document.createElement('div');
+                finalMessage.innerHTML = `<h1>Good Effort!</h1><p>Your total points are: ${points}</p>`;
+                document.body.appendChild(finalMessage);
+            });
+
+            //handle next question button
+            document.getElementById('nextQuestion').addEventListener('click', getNewQuestion);
+            function getNewQuestion() {
+                fetch('/IdentifyAreas/GetNewQuestion')
+                    .then(response => response.json())
+                    .then(data => {
+                        // Clear existing table and list
+                        document.getElementById("tableBody").innerHTML = "";
+
+                        // Update table
+                        const tableBody = document.getElementById("tableBody");
+                        
+                        for (let i = 0; i < Math.max(data.columnA.length, data.columnB.length); i++) {
+                            const row = document.createElement("tr");
+                            const cellA = document.createElement("td");
+                            const cellB = document.createElement("td");
+
+                            if (i < data.columnA.length) {
+                                cellA.textContent = `${i + 1}. ${data.columnA[i]}`;
+                            }
+
+                            if (i < data.columnB.length) {
+                                cellB.textContent = `${String.fromCharCode(97 + i)}. ${data.columnB[i]}`;
+                            }
+
+                            row.appendChild(cellA);
+                            row.appendChild(cellB);
+                            tableBody.appendChild(row);
+                        }
+
+                    });
+            }
+
+
+            //handle check answer button
+            checkAnswerButton.addEventListener("click", function() {
+                let isCorrect = true;
+                let correctAnswerText = "Sorry your answer was incorrect, it should have been:\n";
+
+                Object.keys(correctAnswers).forEach(function(key) {
+                    const selectedValue = document.getElementById(`match_${parseInt(key) - 1}`).value;
+                    const correctValue = correctAnswers[key];
+
+                    if (selectedValue !== correctValue) {
+                        isCorrect = false;
+                    }
+
+                    correctAnswerText += `${key}. ${correctValue}\n`;
+                });
+
+                if (isCorrect) {
+                    points += 10; // Increment by 10 points for a correct answer
+                    document.getElementById('pointsDisplay').textContent = `Points: ${points}`;
+                    userInstructions.textContent = "Congratulations, you got it right!";
+                } else {
+                    userInstructions.textContent = correctAnswerText;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

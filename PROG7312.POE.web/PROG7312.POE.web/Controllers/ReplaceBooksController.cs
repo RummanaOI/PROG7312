@@ -20,25 +20,27 @@ namespace PROG7312.POE.web.Controllers
         [HttpPost]
         public JsonResult ValidateCallNumbers(List<string> reorderedList, List<string> originalList)
         {
-            bool isValid = ValidateOrder(reorderedList, originalList);
-            return Json(isValid);
+            var response = ValidateOrder(reorderedList, originalList);
+            return Json(response);
         }
 
-        private bool ValidateOrder(List<string> reorderedList, List<string> originalList)
+        private object ValidateOrder(List<string> reorderedList, List<string> originalList)
         {
             // Sort the original list using QuickSort
             QuickSort(originalList, 0, originalList.Count - 1);
-
-            // Compare the sorted original list with the reordered list
-            for (int i = 0; i < originalList.Count; i++)
-            {
-                if (originalList[i] != reorderedList[i])
-                {
-                    return false;
-                }
-            }
-            return true;
+            bool isValid = reorderedList.SequenceEqual(originalList);
+            var response = new { IsValid = isValid, CorrectAnswer = originalList };
+            Console.WriteLine(JsonConvert.SerializeObject(response));
+            return response;
         }
+
+        [HttpGet]
+        public JsonResult GetNewCallNumbers()
+        {
+            List<string> newCallNumbers = GenerateRandomCallNumbers();
+            return Json(newCallNumbers);
+        }
+
 
         private List<string> GenerateRandomCallNumbers()
         {
