@@ -5,15 +5,18 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Replace Books</title>
+    @*(Park, 2013)*@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    @*(CodingNepal, 2021)*@
     <link rel="stylesheet" href="~/css/drag-and-drop.css">
+    @*(CodingNepal, 2021)*@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js" integrity="sha512-Eezs+g9Lq4TCCq0wae01s9PuNWzHYoCMkE97e2qdkYthpI0pzC3UGB03lgEHn2XM85hDOUF6qgqqszs+iXU4UA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
     <div class="page-header">
         <br />
         <br />
-        <h1>Identify Areas</h1>
+        <h1>Replace Books</h1>
     </div>
     <div id="container">
         <hr>
@@ -22,10 +25,10 @@
 
         </blockquote>
         <hr>
-
+        @*buttons for next question and end game(Park, 2013)*@
         <div class="btn-group" role="group">
-            <button id="endGame" type="button" class="btn btn-danger">End Game</button>
-            <button id="nextQuestion" type="button" class="btn btn-secondary">Next Question</button>
+            <button id="endGame" type="button" class="btn btn-outline-danger">End Game</button>
+            <button id="nextQuestion" type="button" class="btn btn-outline-info">Next Question</button>
         </div>
 
         <br />
@@ -34,8 +37,7 @@
         <h2 class="mb-0" id="pointsDisplay">Points: 0</h2>
 
 
-
-
+        @*populate sortable with call numbers(Park, 2013)*@
         <div class="wrapper list-group">
             @foreach (var callNumber in Model)
             {
@@ -47,14 +49,14 @@
             }
         </div>
 
-        <button id="checkAnswer" class="btn btn-primary mb-4" style="margin:30px;">Check Answer</button>
+        <button id="checkAnswer" class="btn btn-outline-primary" style="margin-top:40px; margin-bottom:80px;">Check Answer</button>
 
     </div>
 
     <script>
         let points = 0;
 
-        //handle end game button
+        //handle end game button (Kandel, 2018)
         document.getElementById('endGame').addEventListener('click', function () {
             // Hide or remove elements
             document.getElementById('container').style.display = 'none';
@@ -68,7 +70,7 @@
             document.body.appendChild(finalMessage);
         });
 
-        //handle next question button 
+        //handle next question button (Kandel, 2018)
         document.getElementById("nextQuestion").addEventListener("click", function () {
             fetch('/ReplaceBooks/GetNewCallNumbers')
                 .then(response => response.json())
@@ -85,20 +87,20 @@
                         wrapper.appendChild(newItem);
                     });
 
-                    // Re-initialize the Sortable object
+                    // Re-initialize the Sortable object (CodingNepal, 2021)
                     new Sortable(wrapper, {
                         animation: 350
                     });
                 });
         });
 
-
+        // Initialise the sortable object to allow user input(CodingNepal, 2021)
         const dragArea = document.querySelector(".wrapper");
         new Sortable(dragArea, {
             animation: 350
         });
 
-        // Add click event to the button
+        // Add click event to the button (tutorialsEU - C#, 2022)
         document.getElementById("checkAnswer").addEventListener("click", function () {
             let reorderedList = [];
             const items = document.querySelectorAll(".wrapper .item .text");
@@ -106,25 +108,25 @@
                 reorderedList.push(item.textContent);
             });
 
-            // Send the reordered list to the server for validation
+            // Send the reordered list to the server for validation (tutorialsEU - C#, 2022)
             $.ajax({
                 url: '/ReplaceBooks/ValidateCallNumbers',
                 type: 'POST',
                 data: { reorderedList: reorderedList, originalList: @Json.Serialize(Model) },
                 success: function (response) {
 
-                    // Select the instructionMessage element
+                    // Select the instructionMessage element (Kandel, 2018)
                     const messageElement = document.getElementById("userInstructions");
 
-                    //based on response give user feedback via instructionMessage and list
+                    //based on response give user feedback via instructionMessage and list (Kandel, 2018)
                     if (response.isValid) {
                         //answer was correct
                         points += 10; // Add 10 points for a correct answer
-                        document.getElementById("pointsDisplay").textContent = `Points: ${points}`;
-                        messageElement.textContent = "Congratulations, you got it right!";
+                        document.getElementById("pointsDisplay").textContent = `Points: ${points}`; //Display points
+                        messageElement.textContent = "Congratulations, you got it right!"; //Display result message to the user
                     } else {
                         //answer was incorrect
-                        messageElement.textContent = "Sorry, that's not correct. The list below has been put into the correct order, please review your mistake.";
+                        messageElement.textContent = "Sorry, that's not correct. The list below has been put into the correct order, please review your mistake.";//Display result message to the user
 
                         // Update the UI with the correct answers
                         const wrapper = document.querySelector(".wrapper");
@@ -137,7 +139,7 @@
                             wrapper.appendChild(newItem);
                     });
 
-                    // Re-initialize the Sortable object
+                    // Re-initialize the Sortable object (CodingNepal, 2021) 
                     new Sortable(wrapper, {
                         animation: 350
                     });
@@ -151,3 +153,10 @@
 
 </body>
 </html>
+
+<!-- Reference list
+
+    Kandel, R. 2018. Using AJAX In ASP.NET MVC. C# Corner. Available at: https://www.c-sharpcorner.com/blogs/using-ajax-in-asp-net-mvc [Accessed 24 October 2023]
+    tutorialsEU - C#. 2022. Use jQuery AJAX in ASP.NET CORE 6? You NEED to see how it´s done!. YouTube. Available at: https://www.youtube.com/watch?v=dXutAlml_xE [Accessed 24 October 2023]
+    CodingNepal. 2021. Drag & Drop List using HTML CSS & JavaScript | Draggable List in JavaScript. YouTube. Available at: https://www.youtube.com/watch?v=z54suepKiIU [Accessed 24 October 2023]
+    -->

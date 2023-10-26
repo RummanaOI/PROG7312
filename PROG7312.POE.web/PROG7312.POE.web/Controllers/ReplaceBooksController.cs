@@ -10,17 +10,21 @@ namespace PROG7312.POE.web.Controllers
 {
     public class ReplaceBooksController : Controller
     {
-        // GET: /<controller>/
         public IActionResult Index()
         {
+            //create list of random call numbers
             List<string> callNumbers = GenerateRandomCallNumbers();
+            //share list with view 
             return View(callNumbers);
         }
 
+        //post to handle validating the users answer 
         [HttpPost]
         public JsonResult ValidateCallNumbers(List<string> reorderedList, List<string> originalList)
         {
+            //validate users answer
             var response = ValidateOrder(reorderedList, originalList);
+            //returns correct/incorrect for users answer and the correct answer to be presented 
             return Json(response);
         }
 
@@ -28,16 +32,21 @@ namespace PROG7312.POE.web.Controllers
         {
             // Sort the original list using QuickSort
             QuickSort(originalList, 0, originalList.Count - 1);
+            //get state(correct/incorrect) of users answer 
             bool isValid = reorderedList.SequenceEqual(originalList);
+            //create and return the response object 
             var response = new { IsValid = isValid, CorrectAnswer = originalList };
             Console.WriteLine(JsonConvert.SerializeObject(response));
             return response;
         }
 
+        //post to handle multiple questions 
         [HttpGet]
         public JsonResult GetNewCallNumbers()
         {
+            //create list of random call numbers
             List<string> newCallNumbers = GenerateRandomCallNumbers();
+            //share list with view 
             return Json(newCallNumbers);
         }
 
@@ -127,3 +136,5 @@ namespace PROG7312.POE.web.Controllers
     }
 }
 
+//Reference list
+//Jamro, M. 2018. C# Data Structures and Algorithms. Packt Publishing.

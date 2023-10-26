@@ -12,13 +12,11 @@ namespace PROG7312.POE.web.Models
 
         public QuestionData()
         {
-            // Initialize lists
+            // Initialize variables (Jamro, 2018)
             columnA = new List<string>();
             columnB = new List<string>();
             correctAnswers = new Dictionary<string, string>();
-
-            // Your existing logic to populate ColumnA, ColumnB, and CorrectAnswers
-
+            //create random object 
             Random random = new Random();
 
             // Randomly decide between categories and call numbers for columnA
@@ -29,7 +27,7 @@ namespace PROG7312.POE.web.Models
                 // Select 4 random categories for columnA
                 columnA = DDCategories.Categories.Values.OrderBy(x => Guid.NewGuid()).Take(4).ToList();
 
-                // Populate columnB with corresponding call numbers
+                // Populate columnB with corresponding call numbers (Jamro, 2018)
                 foreach (var item in columnA)
                 {
                     string key = DDCategories.Categories.FirstOrDefault(x => x.Value == item).Key;
@@ -38,10 +36,10 @@ namespace PROG7312.POE.web.Models
             }
             else
             {
-                // Select 4 random call numbers for columnA
+                // Select 4 random call numbers for columnA 
                 columnA = DDCategories.Categories.Keys.OrderBy(x => Guid.NewGuid()).Take(4).ToList();
 
-                // Populate columnB with corresponding categories
+                // Populate columnB with corresponding categories (Jamro, 2018)
                 foreach (var key in columnA)
                 {
                     string value;
@@ -50,7 +48,7 @@ namespace PROG7312.POE.web.Models
                 }
             }
 
-            // Add 3 random items to columnB
+            // Add 3 random items to columnB (Jamro, 2018)
             var remainingItems = DDCategories.Categories.Where(x => !columnB.Contains(x.Key) && !columnB.Contains(x.Value)).ToList();
             var randomItems = remainingItems.OrderBy(x => Guid.NewGuid()).Take(3).ToList();
             foreach (var item in randomItems)
@@ -61,9 +59,7 @@ namespace PROG7312.POE.web.Models
             // Randomize the order of columnB
             columnB = columnB.OrderBy(x => Guid.NewGuid()).ToList();
 
-
-
-            //populate correct answers
+            //populate correct answers dictionary (Jamro, 2018)
             for (int i = 0; i < columnA.Count; i++)
             {
                 int colBIndex;
@@ -87,9 +83,11 @@ namespace PROG7312.POE.web.Models
         }
     }
 
+    //static class to store dictionary of categories and call numbers 
     public static class DDCategories
     {
-        public static Dictionary<string, string> Categories = new Dictionary<string, string>
+        //Store top level of dewey decimal call numbers and their respective category (Jamro, 2018)
+        public static Dictionary<string, string> Categories = new Dictionary<string, string> 
         {
             {"000", "Generalities"},
             {"100", "Philosophy & Psychology"},
@@ -104,3 +102,5 @@ namespace PROG7312.POE.web.Models
         };
     }
 }
+//Reference list
+//Jamro, M. 2018. C# Data Structures and Algorithms. Packt Publishing.

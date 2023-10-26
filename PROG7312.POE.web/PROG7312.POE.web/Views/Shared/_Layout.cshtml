@@ -10,28 +10,32 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-fixed-top">
+        @*(Bootstrap, no date)*@
+
+        <nav class="navbar navbar-expand-lg bg-primary navbar-fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DeweyDiscover</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                @*(Bootstrap, no date)*@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle show" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
                                 Games
                             </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="nav-link text-dark" asp-area="" asp-controller="ReplaceBooks" asp-action="Index">Replace Books</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="nav-link text-dark" asp-area="" asp-controller="IdentifyAreas" asp-action="Index">Identify Areas</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="nav-link text-dark">Disbaled</a></li>
-                            </ul>
+                            @*(Park, 2013)*@
+                            <div class="dropdown-menu show" data-bs-popper="static">
+                                <a class="dropdown-item" asp-area="" asp-controller="ReplaceBooks" asp-action="Index">Replace Books</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="IdentifyAreas" asp-action="Index">Identify Areas</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item">Disbaled</a>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -56,3 +60,8 @@
 </body>
 </html>
 
+<!-- Reference list
+    Bootstrap. no date. Navbar. getbootstrap. Available at: https://getbootstrap.com/docs/5.3/components/navbar/ [Accessed 24 October 2023]
+    Park, T. 2013. Journal. Bootswatch. Available at: https://bootswatch.com/journal/#top [Accessed 25 October 2023]
+
+    -->

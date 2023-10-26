@@ -11,21 +11,22 @@ namespace PROG7312.POE.web.Controllers
 {
     public class IdentifyAreasController : Controller
     {
-        // GET: /<controller>/
         public IActionResult Index()
         {
+            //create and initialise new question
             QuestionData model = new QuestionData();
-            // Populate the model
+            // share new question with view
             return View(model);
         }
 
         [HttpGet]
         public JsonResult GetNewQuestion()
         {
+            //create and initialise additional question
             QuestionData newQuestion = new QuestionData();
+            // share additional question with view
             return Json(newQuestion);
         }
 
     }
 }
-

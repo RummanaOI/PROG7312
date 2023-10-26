@@ -6,6 +6,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Identify Areas</title>
+    @*(Park, 2013)*@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
 </head>
 <body>
@@ -17,28 +18,27 @@
 
     <div class="container" id="container">
 
-        <div class="btn-group" role="group">
-            <button id="endGame" type="button" class="btn btn-danger">End Game</button>
-            <button id="nextQuestion" type="button" class="btn btn-secondary">Next Question</button>
-        </div>
-
-        <br />
-        <br />
-
-        <h2 class="mb-0" id="pointsDisplay">Points: 0</h2>
-
         <hr>
         <blockquote class="blockquote text-center">
             <p class="mb-0" id="userInstructions">Match columnA and columnB using the dropdowns below and then pressing the 'Check Answer' button below!</p>
 
         </blockquote>
         <hr>
+        @*buttons for next question and end game(Park, 2013)*@
+        <div class="btn-group" role="group">
+            <button id="endGame" type="button" class="btn btn-outline-danger">End Game</button>
+            <button id="nextQuestion" type="button" class="btn btn-outline-info">Next Question</button>
+        </div>
+
+        <br />
+        <br />
+        <h2 class="mb-0" id="pointsDisplay">Points: 0</h2>
 
         @*Table showing both columns with numerical and alphabetical numbering*@
 
         <div class="row">
             <table class="table table-bordered">
-                <thead class="thead-light">
+                <thead class="thead table-primary">
                     <tr>
                         <th scope="col">Column A</th>
                         <th scope="col">Column B</th>
@@ -94,10 +94,10 @@
         <button id="checkAnswer" class="btn btn-primary mb-4">Check Answer</button>
     </div>
 
-    
 
-    @*script for javascript to handle user interaction*@
-<script>
+
+    @*script for javascript to handle user interaction (Kandel, 2018)*@
+    <script>
     let points = 0;
     let correctAnswers;
 
@@ -106,7 +106,7 @@
             const checkAnswerButton = document.getElementById("checkAnswer");
             const userInstructions = document.getElementById("userInstructions");
 
-            //handle end game button
+            //handle end game button(Kandel, 2018)
             document.getElementById('endGame').addEventListener('click', function () {
                 // Hide or remove elements
                 document.getElementById('container').style.display = 'none';
@@ -120,7 +120,7 @@
                 document.body.appendChild(finalMessage);
             });
 
-            //handle next question button
+            //handle next question button(Kandel, 2018)
             document.getElementById('nextQuestion').addEventListener('click', getNewQuestion);
             function getNewQuestion() {
                 fetch('/IdentifyAreas/GetNewQuestion')
@@ -129,7 +129,10 @@
                         // Update correctAnswers with new data
                         correctAnswers = data.correctAnswers;
 
-                        // Clear existing table and list
+                        //Reset user instructions message
+                        userInstructions.textContent = "Match columnA and columnB using the dropdowns below and then pressing the 'Check Answer' button below!";
+
+                        // Clear existing table and list (Kandel, 2018)
                         document.getElementById("tableBody").innerHTML = "";
 
                         // Update table
@@ -156,7 +159,7 @@
                     });
             }
 
-            //handle check answer button
+            //handle check answer button(Kandel, 2018)
             checkAnswerButton.addEventListener("click", function() {
                 let isCorrect = true;
                 let correctAnswerText = "Sorry your answer was incorrect, it should have been:\n";
@@ -174,13 +177,21 @@
 
                 if (isCorrect) {
                     points += 10; // Increment by 10 points for a correct answer
-                    document.getElementById('pointsDisplay').textContent = `Points: ${points}`;
+                    document.getElementById('pointsDisplay').textContent = `Points: ${points}`; //Display updated points 
                     userInstructions.textContent = "Congratulations, you got it right!";
                 } else {
                     userInstructions.textContent = correctAnswerText;
                 }
             });
         });
-</script>
+    </script>
 </body>
 </html>
+
+<!-- Reference list
+    
+    Kandel, R. 2018. Using AJAX In ASP.NET MVC. C# Corner. Available at: https://www.c-sharpcorner.com/blogs/using-ajax-in-asp-net-mvc [Accessed 24 October 2023]
+    tutorialsEU - C#. 2022. Use jQuery AJAX in ASP.NET CORE 6? You NEED to see how it´s done!. YouTube. Available at: https://www.youtube.com/watch?v=dXutAlml_xE [Accessed 24 October 2023]
+    CodingNepal. 2021. Drag & Drop List using HTML CSS & JavaScript | Draggable List in JavaScript. YouTube. Available at: https://www.youtube.com/watch?v=z54suepKiIU [Accessed 24 October 2023]
+    Park, T. 2013. Journal. Bootswatch. Available at: https://bootswatch.com/journal/#top [Accessed 25 October 2023]
+    -->
